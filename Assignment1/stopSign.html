@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Assignment 1 - part 3 - StopSign</title>
+    <link rel="stylesheet" href="./materialize.min.css" />
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Kumar Nitesh</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./bullsEye.html">BullsEye</a></li>
+          <li><a href="./circles1.html">Circle 1</a></li>
+          <li><a href="./circles2.html">Circles 2</a></li>
+          <li><a href="./stopSign.html">Stop Sign</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <svg width="500" height="300">
+        <defs>
+          <g id="stopSign">
+            <polygon
+              points="25,0 50,0 75,25 75,50 50,75 25,75 0,50, 0,25"
+              fill="red"
+              stroke="gray"
+              stroke-width="4"
+            ></polygon>
+            <text
+              x="10"
+              y="45"
+              font-family="san-serif"
+              font-size="22px"
+              fill="#fff"
+            >
+              STOP
+            </text>
+          </g>
+        </defs>
+
+        <use xlink:href="#stopSign" transform="translate(50,50)"></use>
+        <use
+          xlink:href="#stopSign"
+          transform="translate(275,50) rotate(90)"
+        ></use>
+        <use
+          xlink:href="#stopSign"
+          transform="translate(425,125) rotate(180)"
+        ></use>
+        <use id="spin" xlink:href="#stopSign" x="200" y="150">
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            begin="0s"
+            dur="1s"
+            type="rotate"
+            from="0  237.5 187.5"
+            to="360 237.5 187.5"
+            repeatCount="indefinite"
+          ></animateTransform>
+        </use>
+      </svg>
+    </div>
+  </body>
+</html>

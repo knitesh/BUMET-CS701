@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Assignment 1 - Part 2</title>
+    <link rel="stylesheet" href="./materialize.min.css" />
+    <style>
+      .container {
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Kumar Nitesh</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./bullsEye.html">BullsEye</a></li>
+          <li><a href="./circles1.html">Circle 1</a></li>
+          <li><a href="./circles2.html">Circles 2</a></li>
+          <li><a href="./stopSign.html">Stop Sign</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <!-- Definging canvas element of size 400x400 -->
+      <canvas
+        id="canvas"
+        style="border: 1px solid;"
+        width="400"
+        height="400"
+      ></canvas>
+    </div>
+    <script src="./randomcolor.js"></script>
+    <script src="./circles1.js"></script>
+  </body>
+</html>
