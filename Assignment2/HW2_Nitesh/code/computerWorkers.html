@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Compute Workers</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../materialize.min.css" />
+    <style>
+      #map {
+        min-height: 400px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Kumar Nitesh</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="../index.html">Home</a></li>
+          <li>
+            <a href="./LocationTracker.html">Geolocation</a>
+          </li>
+          <li><a href="./partyWise.html">LocalStorage</a></li>
+          <li>
+            <a href="./computeWorkers.html">Webworkers</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col m6 s12">
+          <ul class="collection with-header" id="message">
+            <li class="collection-header" id="status">
+              Posting Message to Worker
+            </li>
+          </ul>
+        </div>
+        <div class="col m6 s12">
+          <ul class="collection with-header" id="result">
+            <li class="collection-header" id="status">
+              Receiving Response from worker
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="./computeWorker.js"></script> -->
+    <script>
+      (function() {
+        const localstoragekey = `knitesh-worker-example`;
+        // get hooks to html element
+        const messageEl = document.getElementById("message");
+        const resultEl = document.getElementById("result");
+
+        const displayResult = response => {
+          const result = response.data;
+          const storedData = JSON.parse(localStorage.getItem(localstoragekey));
+
+          if (storedData) {
+            storedData.push(result);
+            localStorage.setItem(localstoragekey, JSON.stringify(storedData));
+          } else {
+            localStorage.setItem(localstoragekey, JSON.stringify([result]));
+          }
+
+          // prepare text to display on interface
+          const resultText = `<li class="collection-item ">
+              ${JSON.stringify(result)} 
+            </li>`;
+          resultEl.innerHTML += resultText;
+        };
+        const displayError = err => {
+          console.error("error received from workerFor => ", err);
+        };
+
+        if (window.Worker) {
+          //let clean up localstorage first
+          localStorage.removeItem(localstoragekey);
+
+          let startNumber = 1;
+          let endNumber = 1000;
+          const numOfWorker = 5;
+
+          // loop through and create 5 worker passing (1,1000),(1001,2000)... and so on
+          for (let count = 1; count <= numOfWorker; count++) {
+            const worker = new Worker("computeWorker.js");
+            // post message to work
+            worker.postMessage({ startNumber, endNumber });
+            // listne for message from worker
+            worker.addEventListener("message", displayResult);
+            // listen to error event of worker
+            worker.addEventListener("error", displayError);
+
+            // prepare text to display on interface
+            const message = `<li class="collection-item ">
+              ${JSON.stringify({ startNumber, endNumber })}
+            </li>`;
+            let messageText = messageEl.innerHTML;
+            messageEl.innerHTML = messageText + message;
+
+            startNumber += 1000;
+            endNumber += 1000;
+          }
+        } else {
+          console.log("Your browser doesn't support web workers.");
+        }
+      })();
+    </script>
+  </body>
+</html>

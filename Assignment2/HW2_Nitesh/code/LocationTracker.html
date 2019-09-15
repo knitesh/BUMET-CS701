@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LocationTracker - Assigment2</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../materialize.min.css" />
+    <style>
+      #map {
+        min-height: 400px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Kumar Nitesh</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="../index.html">Home</a></li>
+          <li>
+            <a href="./LocationTracker.html">Geolocation</a>
+          </li>
+          <li><a href="./partyWise.html">LocalStorage</a></li>
+          <li>
+            <a href="./computerWorkers.html">Webworkers</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <header>
+        <h2>Assignment 2 : Location Tracker</h2>
+      </header>
+      <section>
+        <article>
+          <button id="btnCurrentLocation" class="waves-effect waves-light btn">
+            Start (Get Current Location)
+          </button>
+          <!-- <button id="btnNextPath" class="waves-effect waves-light btn">
+            Show Next Path
+          </button> -->
+          <div class="row">
+            <ul class="collection with-header col s12 m6">
+              <li class="collection-header" id="status">
+                <h4>Status</h4>
+              </li>
+              <li class="collection-item " id="latitude">Latitude:</li>
+              <li class="collection-item" id="longitude">Longitude:</li>
+              <li class="collection-item" id="accuracy">Accuracy:</li>
+              <li class="collection-item" id="timestamp">Timestamp:</li>
+            </ul>
+
+            <div class="col s12 m6">
+              <div id="map">
+                Click on Get current location to see map
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+    <script src="./LocationTracker.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT2_sA3Z-aoztwo3AhNk8shuwWu7l80GA&callback=noop"
+      async
+      defer
+    ></script>
+  </body>
+</html>
