@@ -46,10 +46,13 @@
         }
 
         document.getElementById("status").innerHTML =
-          "Loaded " + senators.length + " senators";
+          "From AJAX Loaded " + senators.length + " senators";
 
         // insert data into
         insertSenatorsListIntoLocalStorage(senators);
+        document.getElementById("status").innerHTML =
+          "From AJAX Loaded " + senators.length + " senators";
+        displaySenatorsList(senators);
       } else {
         document.getElementById("status").innerHTML =
           "There was a problem with the request " + xhr.status;
@@ -65,16 +68,17 @@
 
   const insertSenatorsListIntoLocalStorage = senators => {
     localStorage.setItem(localstorage_key, JSON.stringify(senators));
-    displaySenatorsList();
   };
   const getSenatorsListFromStorage = () => {
-    const list = localStorage.getItem(localstorage_key);
-    return JSON.parse(list);
+    const list = JSON.parse(localStorage.getItem(localstorage_key));
+    document.getElementById("status").innerHTML =
+      "From LocalStorage Loaded " + list.length + " senators";
+    displaySenatorsList(list);
   };
 
-  const displaySenatorsList = () => {
+  const displaySenatorsList = senators => {
     const members = document.getElementById("members");
-    const senators = getSenatorsListFromStorage();
+
     const list = senators.map(senator => {
       const key = senator.name.split(" ").join("-");
       const el = `<li id=${key} class="collection-item" draggable="true">${senator.name}</li>`;
@@ -86,6 +90,6 @@
   };
   // read data from XML
   isSenatoresListInLocalStorage()
-    ? displaySenatorsList()
+    ? getSenatorsListFromStorage()
     : makeXMLRequest("./partyList.xml");
 })();
