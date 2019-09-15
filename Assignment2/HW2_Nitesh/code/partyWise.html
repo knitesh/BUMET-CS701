@@ -3,16 +3,14 @@
   <head>
     <title>Democrats/Republicans</title>
     <meta charset="utf-8" />
-    <script src="partyWise.js"></script>
 
     <link rel="stylesheet" href="../materialize.min.css" />
     <!-- <link rel="stylesheet" href="html5.css" /> -->
 
     <style type="text/css">
-      .dropList {
-        display: table-cell;
-        width: 400px;
-      }
+      /* .dropList {
+        display: flex;
+      } */
       ul {
         padding-left: 30px;
       }
@@ -56,18 +54,20 @@
       <p>Drag members to either the Democrats or Republicans list.</p>
 
       <div id="status"></div>
-      <ul id="members"></ul>
+      <div class="row">
+        <ul id="members" class="collection col m6 s12"></ul>
+      </div>
 
-      <div id="dropLists" style="display: table">
-        <div style="display: table-row">
-          <div class="dropList">
+      <div id="dropLists" class="">
+        <div class="row">
+          <div class="col m6 s12">
             <fieldset>
               <legend>Democrats:</legend>
               <ul id="democrats"></ul>
             </fieldset>
           </div>
 
-          <div class="dropList">
+          <div class="col m6 s12">
             <fieldset>
               <legend>Republicans:</legend>
               <ul id="republicans"></ul>
@@ -78,5 +78,6 @@
 
       <p id="msg">Drop over the respective targets</p>
     </div>
+    <script src="partyWise.js"></script>
   </body>
 </html>
