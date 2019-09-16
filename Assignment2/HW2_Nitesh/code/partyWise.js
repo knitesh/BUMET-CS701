@@ -1,18 +1,19 @@
 (function() {
-  const keyLocalStorage = "knitesh-senators-list";
-
   const DEMOCRATE_PARTY = "Democrat";
   const REPUBLICAN_PARTY = "Republican";
+  const keyLocalStorage = "knitesh-senators-list";
 
+  // get reference to html elements
   const msg = document.getElementById("msg");
   const senatorSource = document.getElementById("members");
   const democratesTarget = document.getElementById("democratsList");
   const republicanTarget = document.getElementById("republicansList");
 
+  // variable to store sourceID and party name during drag and drop
   let sourceId, partyName;
   // XMLHttpRequest - asynchronous loading of XML data
   let xhr;
-
+  // function make XML request : copied from sample
   const makeXMLRequest = url => {
     if (window.XMLHttpRequest) {
       xhr = new XMLHttpRequest();
@@ -32,6 +33,7 @@
 
   // callback function when data is loaded
   const loadXMLData = () => {
+    // senators array
     let senators = [];
     if (xhr.readyState == 4) {
       if (xhr.status == 200) {
@@ -52,9 +54,7 @@
           senators.push(newSenator);
         }
 
-        document.getElementById("status").innerHTML =
-          "From AJAX Loaded " + senators.length + " senators";
-
+        // update status message on UI
         document.getElementById("status").innerHTML =
           "From AJAX Loaded " + senators.length + " senators";
         // insert data into localstorage
@@ -68,16 +68,19 @@
     }
   };
 
+  // function to check if senatores list is in localstorage
   const isSenatoresListInLocalStorage = () => {
     const data = localStorage.getItem(keyLocalStorage);
     console.log(data && data.length > 0);
     return data && data.length > 0 ? true : false;
   };
 
+  // function to check if senator already voted
   const isSenatoreAlreadyVoted = senatorId => {
     // get the info about senator from localstoreage
     const data = JSON.parse(localStorage.getItem(keyLocalStorage));
-    let voted = false;
+    let voted = false; //default value
+
     data.forEach(senator => {
       const key = senator.name.split(" ").join("_");
       if (key === senatorId && senator.voted) {
@@ -88,15 +91,20 @@
     return voted;
   };
 
+  // function to insert senator into local storage
   const insertSenatorsListIntoLocalStorage = senators => {
     localStorage.setItem(keyLocalStorage, JSON.stringify(senators));
   };
+  // function to get senators list from storage
   const getSenatorsListFromStorage = () => {
+    // retrieve data and convert to JSON object
     const list = JSON.parse(localStorage.getItem(keyLocalStorage));
+    // update status
     document.getElementById("status").innerHTML =
       "From LocalStorage Loaded " + list.length + " senators";
     displaySenatorsList(list);
   };
+  // function to move seantor to drop location
   const moveSenatorToDropLocation = (senator, element) => {
     //if democrates move to democrates drop
     if (senator.party === DEMOCRATE_PARTY) {
@@ -106,82 +114,8 @@
       republicanTarget.innerHTML += element;
     }
   };
-
-  const displaySenatorsList = senators => {
-    const members = document.getElementById("members");
-
-    const list = senators.map(senator => {
-      const key = senator.name.split(" ").join("_");
-      // check if senator is already voted
-      const isVoted = senator.voted;
-      // if yes move them to their drop location
-      const el = `<li id=${key} data-party=${senator.party} class="collection-item" draggable="true">${senator.name}</li>`;
-      if (isVoted) {
-        moveSenatorToDropLocation(senator, el);
-      }
-      return el;
-    });
-
-    members.innerHTML = list.join("");
-  };
-  // read data from XML
-  isSenatoresListInLocalStorage()
-    ? getSenatorsListFromStorage()
-    : makeXMLRequest("./partyList.xml");
-
-  const dragStartHandler = e => {
-    e.dataTransfer.setData("Text", e.target.id);
-    e.dataTransfer.setData("PartyName", e.target.getAttribute("data-party"));
-    sourceId = e.target.id; // explicitly for some browsers
-    partyName = e.target.getAttribute("data-party");
-    e.target.classList.add("dragged");
-  };
-
-  // drag functions for member list
-  const dragEndHandler = e => {
-    msg.innerHTML = "Drag ended";
-    var elems = document.querySelectorAll(".dragged");
-    for (var i = 0; i < elems.length; i++) {
-      elems[i].classList.remove("dragged");
-    }
-  };
-
-  const dragHandler = e => {
-    msg.innerHTML =
-      "Dragging " +
-      e.target.id +
-      " party:" +
-      e.target.getAttribute("data-party");
-  };
-  // Democarte drop location handlers
-  const dDragEnterHandler = e => {
-    console.log(
-      "Drag Entering " +
-        e.target.id +
-        " source is " +
-        e.dataTransfer.getData("Text")
-    );
-
-    const partyAffiliation = e.dataTransfer.getData("PartyName") || partyName;
-    if (partyAffiliation == DEMOCRATE_PARTY) {
-      e.preventDefault();
-    }
-  };
-  const dDragOverHandler = e => {
-    console.log(
-      "Drag Over " +
-        e.target.id +
-        " source is " +
-        e.dataTransfer.getData("Text")
-    );
-
-    const partyAffiliation = e.dataTransfer.getData("PartyName") || partyName;
-    if (partyAffiliation == DEMOCRATE_PARTY) {
-      e.preventDefault();
-    }
-  };
+  // update voting status
   const updateVotingStatus = id => {
-    console.log(id);
     // get the senators list from localstorage
     // and update their voting status
     const senators = JSON.parse(localStorage.getItem(keyLocalStorage));
@@ -196,7 +130,77 @@
     //update localstorage with updated list
     insertSenatorsListIntoLocalStorage(updatedList);
   };
-  const dDropHandler = e => {
+  // function to display senator list
+  const displaySenatorsList = senators => {
+    const members = document.getElementById("members");
+
+    const list = senators.map(senator => {
+      const key = senator.name.split(" ").join("_");
+      // create HTML element string
+      const el = `<li id=${key} data-party=${senator.party} class="collection-item" draggable="true">${senator.name}</li>`;
+      // check if senator is already voted
+      const isVoted = senator.voted;
+      // if yes move them to their drop location
+      if (isVoted) {
+        moveSenatorToDropLocation(senator, el);
+      }
+      return el;
+    });
+
+    members.innerHTML = list.join("");
+  };
+
+  // common drag handler
+  const dragStartHandler = e => {
+    e.dataTransfer.setData("Text", e.target.id);
+    e.dataTransfer.setData("PartyName", e.target.getAttribute("data-party"));
+    sourceId = e.target.id; // explicitly for some browsers
+    partyName = e.target.getAttribute("data-party");
+    e.target.classList.add("dragged");
+  };
+  // drag functions for member list
+  const dragEndHandler = e => {
+    msg.innerHTML = "Drag ended";
+    var elems = document.querySelectorAll(".dragged");
+    for (var i = 0; i < elems.length; i++) {
+      elems[i].classList.remove("dragged");
+    }
+  };
+  const dragHandler = e => {
+    msg.innerHTML =
+      "Dragging " +
+      e.target.id +
+      " party:" +
+      e.target.getAttribute("data-party");
+  };
+  // Democrate drop location handlers
+  const democratesDragEnterHandler = e => {
+    console.log(
+      "Drag Entering " +
+        e.target.id +
+        " source is " +
+        e.dataTransfer.getData("Text")
+    );
+
+    const partyAffiliation = e.dataTransfer.getData("PartyName") || partyName;
+    if (partyAffiliation == DEMOCRATE_PARTY) {
+      e.preventDefault();
+    }
+  };
+  const democratesDragOverHandler = e => {
+    console.log(
+      "Drag Over " +
+        e.target.id +
+        " source is " +
+        e.dataTransfer.getData("Text")
+    );
+
+    const partyAffiliation = e.dataTransfer.getData("PartyName") || partyName;
+    if (partyAffiliation == DEMOCRATE_PARTY) {
+      e.preventDefault();
+    }
+  };
+  const democratesDropHandler = e => {
     e.preventDefault();
     const senatorId = e.dataTransfer.getData("Text") || sourceId;
     console.log("Drop on " + e.target.id + " source is " + senatorId);
@@ -209,8 +213,8 @@
     }
   };
 
-  // Republican drop handlers
-  const rDragEnterHandler = e => {
+  // Republican drag drop handlers
+  const republicanDragEnterHandler = e => {
     console.log(
       "Drag Entering " +
         e.target.id +
@@ -223,7 +227,7 @@
       e.preventDefault();
     }
   };
-  const rDragOverHandler = e => {
+  const republicanDragOverHandler = e => {
     console.log(
       "Drag Over " +
         e.target.id +
@@ -237,7 +241,7 @@
     }
   };
 
-  const rDropHandler = e => {
+  const republicanDropHandler = e => {
     e.preventDefault();
     const senatorId = e.dataTransfer.getData("Text") || sourceId;
 
@@ -259,12 +263,17 @@
   senatorSource.ondrag = dragHandler;
 
   // Add event handlers for the Democrates target
-  democratesTarget.ondragenter = dDragEnterHandler;
-  democratesTarget.ondragover = dDragOverHandler;
-  democratesTarget.ondrop = dDropHandler;
+  democratesTarget.ondragenter = democratesDragEnterHandler;
+  democratesTarget.ondragover = democratesDragOverHandler;
+  democratesTarget.ondrop = democratesDropHandler;
 
   // Add event handlers for the Republican target
-  republicanTarget.ondragenter = rDragEnterHandler;
-  republicanTarget.ondragover = rDragOverHandler;
-  republicanTarget.ondrop = rDropHandler;
+  republicanTarget.ondragenter = republicanDragEnterHandler;
+  republicanTarget.ondragover = republicanDragOverHandler;
+  republicanTarget.ondrop = republicanDropHandler;
+
+  // read data from XML
+  isSenatoresListInLocalStorage()
+    ? getSenatorsListFromStorage()
+    : makeXMLRequest("./partyList.xml");
 })();

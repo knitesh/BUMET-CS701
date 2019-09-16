@@ -48,15 +48,21 @@
     <!-- <script src="./computeWorker.js"></script> -->
     <script>
       (function() {
+        // key to store data in localstorage
         const localstoragekey = `knitesh-worker-example`;
         // get hooks to html element
         const messageEl = document.getElementById("message");
         const resultEl = document.getElementById("result");
 
+        // function to display the reecived response
         const displayResult = response => {
+          // retrieve the data from response
           const result = response.data;
+          // get the stored data from localstorage and parse back into JSON
           const storedData = JSON.parse(localStorage.getItem(localstoragekey));
 
+          // if we already have data, push  new result into it else add result
+          // directly to localstorage in a string format
           if (storedData) {
             storedData.push(result);
             localStorage.setItem(localstoragekey, JSON.stringify(storedData));
@@ -68,16 +74,20 @@
           const resultText = `<li class="collection-item ">
               ${JSON.stringify(result)} 
             </li>`;
+          // update the interface
           resultEl.innerHTML += resultText;
         };
+        // function to log error in the dev console
         const displayError = err => {
           console.error("error received from workerFor => ", err);
         };
 
+        // check if browser supports Worker api
         if (window.Worker) {
           //let clean up localstorage first
           localStorage.removeItem(localstoragekey);
 
+          // default values
           let startNumber = 1;
           let endNumber = 1000;
           const numOfWorker = 5;
@@ -91,14 +101,14 @@
             worker.addEventListener("message", displayResult);
             // listen to error event of worker
             worker.addEventListener("error", displayError);
-
             // prepare text to display on interface
             const message = `<li class="collection-item ">
               ${JSON.stringify({ startNumber, endNumber })}
             </li>`;
             let messageText = messageEl.innerHTML;
+            // update interface
             messageEl.innerHTML = messageText + message;
-
+            // increment start and end number
             startNumber += 1000;
             endNumber += 1000;
           }

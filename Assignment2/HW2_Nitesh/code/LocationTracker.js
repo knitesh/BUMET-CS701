@@ -1,10 +1,10 @@
 (function(win) {
-  // Google map
+  // Google map var
   let map = null;
-  // Path
-
+  // Marker var
   let lastMarker = null;
 
+  // get ref to status
   const textMessage = document.getElementById("status").innerHTML;
 
   // function to call geolocation api
@@ -162,14 +162,17 @@
     }, 5000);
   };
 
-  // function to display status
+  // function to update status
   const updateStatus = message => {
     document.getElementById("status").innerHTML = textMessage;
   };
   // Get button and add evenListener to handle click event
   const currentLocation = document.getElementById("btnCurrentLocation");
+  // add onClick event listner to the button
   currentLocation.addEventListener("click", () => {
     currentLocation.disabled = true;
-    getLocation();
+    // check if navigator api is available
+    if (win.navigator) getLocation();
+    else console.error("Navigator api is not supported");
   });
 })(window);
