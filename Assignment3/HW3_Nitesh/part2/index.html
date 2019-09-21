@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en">
   <head>
-    <title>Book Shopping Cart</title>
+    <title>Tokenize Filter</title>
 
     <link rel="stylesheet" href="./../materialize.min.css" />
   </head>
 
-  <body>
+  <body ng-app="tokenApp">
     <nav>
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">Kumar Nitesh</a>
@@ -15,13 +15,32 @@
           <li>
             <a href="/part1/index.html">Cart Assignment</a>
           </li>
-          <li><a href="./part2/index.html">Part 2</a></li>
+          <li><a href="/part2/index.html">Tokenize Filter</a></li>
         </ul>
       </div>
     </nav>
-    <div class="container" ng-controller="TokenControler"></div>
+    <div class="container" ng-controller="TokenController">
+      <h4>Tokenize Filter Assignment</h4>
+      <h5>Inputs:</h5>
+      <div class="card-panel">
+        <label for="strInput">Input</label>
+        <input id="strInput" name="strInput" ng-model="strInput" />
+        <label for="strDelimiter">Delimiter</label>
+        <input id="strDelimiter" name="strDelimiter" ng-model="strDelimiter" />
+      </div>
+      <h5>Result:</h5>
+      <div class="card-panel blue">
+        <div class="section white-text">
+          {{ strInput | tokenize }} (Default)
+        </div>
+        <div class="section white-text">
+          {{ strInput | tokenize: strDelimiter }} (With Options)
+        </div>
+      </div>
+    </div>
 
     <script src="./../js/angular16.js"></script>
-    <script src="./cart.controller.js"></script>
+    <script src="./token.controller.js"></script>
+    <script src="./tokenize.filter.js"></script>
   </body>
 </html>

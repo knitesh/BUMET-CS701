@@ -1,5 +1,6 @@
 angular
   .module("tokenApp", [])
-  .controller("TokenController", function($scope, $timeout) {
-    const keyLocalStorage = "Nitesh_cart";
+  .controller("TokenController", function($scope, tokenizeFilter) {
+    $scope.strInput = "Angular is awesome";
+    $scope.strDelimiter = ",";
   });
