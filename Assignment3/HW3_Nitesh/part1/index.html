@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <title>Book Shopping Cart</title>
+
+    <link rel="stylesheet" href="./../materialize.min.css" />   
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Kumar Nitesh</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/index.html">Home</a></li>
+          <li>
+            <a href="/part1/index.html">Cart Assignment</a>
+          </li>
+          <li><a href="./part2/index.html">Part 2</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div
+      class="container"
+      ng-controller="CartControler"
+      ng-init="updateTotal()"
+    >      
+      <table class="responsive-table highlight card-panel">
+        <caption >
+            <span class="blue-text text-darken-2"><b>My Books</b></span>
+        </caption>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>UnitPrice</th>
+            <th>$UnitPrice</th>
+            <th>Line Total</th>
+            <th>Total {{ updateTotal() | currency }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="book in books">
+            <td>
+              <input ng-model="book.title" />
+            </td>
+            <td>
+              <input ng-model="book.qty" size="2" />
+            </td>
+            <td>
+              <input ng-model="book.price" size="5" />
+            </td>
+            <td>{{ book.price | currency }}</td>
+            <td>{{ book.price * book.qty | currency }}</td>
+            <td>
+              <button ng-click="removeBook($index)">
+                Remove
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <button
+                class="btn waves-effect waves-light"
+                ng-click="addBook()"
+                name="addBook"
+              >
+                Add New
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn waves-effect waves-light"
+                ng-click="saveBooks()"
+                name="saveBooks"
+              >
+                Save
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table> 
+      <div>
+          {{ status }}</span>
+        </div>    
+    </div>
+    
+    <script src="./../js/angular16.js"></script>
+    <script src="./cart.controller.js"></script>
+  </body>
+</html>
