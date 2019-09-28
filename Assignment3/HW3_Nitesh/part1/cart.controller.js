@@ -20,9 +20,11 @@ app.controller("CartController", function($scope, $timeout) {
   let storedBooks = localStorage.getItem(keyLocalStorage);
   // if storage has data load books from storage
   // otherwise from default books lists
-  storedBooks
-    ? ($scope.books = JSON.parse(storedBooks))
-    : ($scope.books = defaultBooks);
+  if (storedBooks) {
+    $scope.books = JSON.parse(storedBooks);
+  } else {
+    $scope.books = defaultBooks;
+  }
 
   // function to remove book from list
   $scope.removeBook = function(index) {

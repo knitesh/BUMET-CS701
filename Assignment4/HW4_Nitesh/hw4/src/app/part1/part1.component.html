@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>HW4 -Part1</h3>
+      <b>My Books</b>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered ">
+        <thead class="thead-dark">
+          <tr>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>UnitPrice</th>
+            <th>$UnitPrice</th>
+            <th>Line Total</th>
+            <th>Total : {{ updateTotal() | currency }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Using tracj by as inserting more than 2 default rows will throw erro -->
+          <tr *ngFor="let book of books">
+            <td>
+              <input [(ngModel)]="book.title" class="form-control" />
+            </td>
+            <td>
+              <input [(ngModel)]="book.qty" size="2" class="form-control" />
+            </td>
+            <td>
+              <input [(ngModel)]="book.price" size="5" class="form-control" />
+            </td>
+            <td>{{ book.price | currency }}</td>
+            <td>{{ book.price * book.qty | currency }}</td>
+            <td>
+              <button
+                (click)="removeBook($index)"
+                class="btn btn-secondary float-right"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="7">
+              <button
+                class="btn btn-outline-primary"
+                (click)="addBook()"
+                name="addBook"
+              >
+                Add New
+              </button>
+
+              <button
+                class="btn btn-outline-success float-right "
+                (click)="saveBooks()"
+                name="saveBooks"
+              >
+                Save
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="card-footer">
+      {{ status }}
+    </div>
+  </div>
+</div>

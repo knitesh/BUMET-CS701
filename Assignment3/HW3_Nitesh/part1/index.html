@@ -36,11 +36,12 @@
             <th>UnitPrice</th>
             <th>$UnitPrice</th>
             <th>Line Total</th>
-            <th>Total {{ updateTotal() | currency }}</th>
+            <th>Total : {{ updateTotal() | currency }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="book in books">
+          <!-- Using tracj by as inserting more than 2 default rows will throw erro -->
+          <tr ng-repeat="book in books  track by $index">
             <td>
               <input ng-model="book.title" />
             </td>
@@ -53,7 +54,7 @@
             <td>{{ book.price | currency }}</td>
             <td>{{ book.price * book.qty | currency }}</td>
             <td>
-              <button ng-click="removeBook($index)">
+              <button ng-click="removeBook($index)" class='waves-effect waves-teal btn-flat'>
                 Remove
               </button>
             </td>
@@ -61,7 +62,7 @@
           <tr>
             <td colspan="5">
               <button
-                class="btn waves-effect waves-light"
+                class="btn waves-effect waves-light "
                 ng-click="addBook()"
                 name="addBook"
               >
