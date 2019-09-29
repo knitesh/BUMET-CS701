@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-
+// component decorator
 @Component({
   selector: "app-part1",
   templateUrl: "./part1.component.html"
 })
 export class Part1Component implements OnInit {
+  // define localstorage key
   keyLocalStorage = "Nitesh_cart";
+  // books array
   books = [];
   // default list of Books
   defaultBooks = [
@@ -13,11 +15,11 @@ export class Part1Component implements OnInit {
     { title: "Pro HTML5", qty: 2, price: 27.95 },
     { title: "Head First HTML5", qty: 1, price: 27.89 }
   ];
+
+  // empty constructor
   constructor() {}
-
+  // using OnInit to initialize additional values
   ngOnInit() {
-    // define key for localstorage
-
     //get the books list from localstorage
     const storedBooks = localStorage.getItem(this.keyLocalStorage);
     // if storage has data load books from storage
@@ -28,7 +30,7 @@ export class Part1Component implements OnInit {
       this.books = this.defaultBooks;
     }
   }
-
+  // Instance Functions:
   // function to remove book from list
   removeBook = function(index) {
     this.books.splice(index, 1);
