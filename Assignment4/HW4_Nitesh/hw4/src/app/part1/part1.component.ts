@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-part1",
-  templateUrl: "./part1.component.html",
-  styleUrls: ["./part1.component.css"]
+  templateUrl: "./part1.component.html"
 })
 export class Part1Component implements OnInit {
   keyLocalStorage = "Nitesh_cart";
