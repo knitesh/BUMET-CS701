@@ -1,35 +1,33 @@
 <div class="button-row">
   <a mat-fab color="primary" [routerLink]="['/posts']"
-    ><mat-icon>list</mat-icon></a
+    ><mat-icon>arrow_back</mat-icon></a
   >
 </div>
-<mat-card class="example-card">
+<mat-card>
   <mat-card-header>
     <mat-card-title
       ><h2>{{ post.title }}</h2></mat-card-title
     >
-    <mat-card-subtitle>{{ post.description }}</mat-card-subtitle>
+    <mat-card-subtitle>
+      {{ post.author }} | {{ post.creationTime | date }}</mat-card-subtitle
+    >
   </mat-card-header>
   <mat-card-content>
-    <dl>
-      <dt>ISBN:</dt>
-      <dd>{{ post.isbn }}</dd>
-      <dt>Author:</dt>
-      <dd>{{ post.author }}</dd>
-      <dt>Publisher:</dt>
-      <dd>{{ post.publisher }}</dd>
-      <dt>Publish Year:</dt>
-      <dd>{{ post.published_year }}</dd>
-      <dt>Update Date:</dt>
-      <dd>{{ post.updated_date | date }}</dd>
-    </dl>
+    <p class="p-4">
+      {{ post.description }}
+    </p>
   </mat-card-content>
   <mat-card-actions>
-    <a mat-fab color="primary" [routerLink]="['/post-edit', post.key]"
-      ><mat-icon>edit</mat-icon></a
+    <button mat-button color="primary" [routerLink]="['/post-edit', post.key]">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-button
+      color="warn"
+      (click)="deletePost(post.key)"
+      class="float-right"
     >
-    <a mat-fab color="warn" (click)="deletePost(post.key)"
-      ><mat-icon>delete</mat-icon></a
-    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

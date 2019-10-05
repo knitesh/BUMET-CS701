@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FireBasePostService } from "../servcies/posts.service";
+import { AngularFireAuth } from "@angular/fire/auth";
 import {
   FormControl,
   FormGroupDirective,
@@ -23,14 +24,14 @@ export class PostCreateComponent implements OnInit {
   constructor(
     private router: Router,
     private fs: FireBasePostService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public afAuth: AngularFireAuth
   ) {}
 
   ngOnInit() {
     this.postsForm = this.formBuilder.group({
       title: [null, Validators.required],
       description: [null, Validators.required],
-      author: [null, Validators.required],
       link: [null, Validators.required]
     });
   }
@@ -38,7 +39,15 @@ export class PostCreateComponent implements OnInit {
   onFormSubmit(form: NgForm) {
     // get form data
     const creationTime = Date.now();
-    const updateData = { ...form, creationTime: creationTime };
+    const user = this.afAuth.auth.currentUser;
+
+    console.log("....user", user);
+    const updateData = {
+      ...form,
+      creationTime: creationTime,
+      auther_id: user.uid,
+      author: user.displayName || "anonymous"
+    };
     this.fs.createPost(updateData).subscribe(
       res => {
         let id = res["key"];

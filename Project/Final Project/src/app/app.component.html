@@ -4,70 +4,139 @@
   class="light-theme"
   [ngClass]="{ 'dark-theme': isDarkTheme | async }"
 >
-  <mat-toolbar>
-    <mat-toolbar-row>
-      <button
-        mat-icon-button
-        (click)="sidenav.toggle()"
-        fxShow="true"
-        fxHide.gt-sm
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>CollectorJS</span>
-      <span class="example-spacer"></span>
-      <div fxShow="true" fxHide.lt-md="true">
-        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-        <a routerLink="/" mat-button>
-          <mat-icon>home</mat-icon>
-          Home
-        </a>
-        <a routerLink="/post-create" mat-button>
-          <mat-icon>link</mat-icon>
-          Submit Link
-        </a>
-        <a href="#" mat-button>
-          <mat-icon>account_box</mat-icon>
-          My Account
-        </a>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  <mat-sidenav-container class="main-content" style="min-height:100vh">
-    <mat-sidenav #sidenav>
-      <mat-nav-list>
-        <a routerLink="/" mat-list-item>
-          <mat-icon>home</mat-icon>
-          Home
-        </a>
-        <a routerLink="/post-create" mat-list-item>
-          <mat-icon>link</mat-icon>
-          Submit Link
-        </a>
-        <a href="#" mat-list-item>
-          <mat-icon>account_box</mat-icon>
-          My Account
-        </a>
-
-        <a (click)="sidenav.toggle()" mat-list-item>
-          <mat-icon>close</mat-icon> Close
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="container">
-      <div>
-        <mat-slide-toggle
-          [checked]="isDarkTheme | async"
-          (change)="toggleDarkTheme($event.checked)"
-          class="float-right m-2"
-          m
-          >Dark theme</mat-slide-toggle
+  <div *ngIf="afAuth.user | async as user; else showLogin">
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <button
+          mat-icon-button
+          (click)="sidenav.toggle()"
+          fxShow="true"
+          fxHide.gt-sm
         >
-      </div>
-      <div class="mt-5">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>CollectorJS</span>
+        <span class="example-spacer"></span>
+        <div fxShow="true" fxHide.lt-md="true">
+          <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+          <a routerLink="/" mat-button>
+            <mat-icon>home</mat-icon>
+            Home
+          </a>
+          <a routerLink="/post-create" mat-button>
+            <mat-icon>link</mat-icon>
+            Submit Link
+          </a>
+          <button (click)="logout()" mat-button>
+            <mat-icon>account_box</mat-icon>
+            Logout
+          </button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="main-content" style="min-height:100vh">
+      <mat-sidenav #sidenav>
+        <mat-nav-list>
+          <a routerLink="/" mat-list-item>
+            <mat-icon>home</mat-icon>
+            Home
+          </a>
+          <a routerLink="/post-create" mat-list-item>
+            <mat-icon>link</mat-icon>
+            Submit Link
+          </a>
+          <a href="#" mat-list-item>
+            <mat-icon>account_box</mat-icon>
+            My Account
+          </a>
+
+          <a (click)="sidenav.toggle()" mat-list-item>
+            <mat-icon>close</mat-icon> Close
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content class="container">
+        <div>
+          <mat-slide-toggle
+            [checked]="isDarkTheme | async"
+            (change)="toggleDarkTheme($event.checked)"
+            class="float-right m-2"
+            m
+            >Dark theme</mat-slide-toggle
+          >
+        </div>
+        <div class="mt-5">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  <ng-template #showLogin>
+    <div class="container container-small">
+      <mat-card class="text-centered">
+        <mat-card-header class="row mt-5 mb-4">
+          CollectorJS
+        </mat-card-header>
+        <mat-card-content>
+          <form class="m-4">
+            <mat-form-field class="col-12">
+              <input
+                matInput
+                placeholder="Email"
+                [(ngModel)]="email"
+                name="email"
+                required
+                autocomplete="false"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="col-12">
+              <input
+                matInput
+                placeholder="Password"
+                [(ngModel)]="password"
+                type="password"
+                name="password"
+                required
+                autocomplete="false"
+              />
+            </mat-form-field>
+          </form>
+          <mat-spinner
+            [style.display]="showSpinner ? 'block' : 'none'"
+          ></mat-spinner>
+        </mat-card-content>
+        <mat-card-actions class="m-4 pl-3">
+          <button mat-raised-button color="primary" (click)="login()">
+            Login with Google
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="loginGithub()"
+            class="ml-5"
+          >
+            Login with Github
+          </button>
+          <span class="float-right">
+            <button mat-button (click)="doRegister()" color="secondary">
+              Register
+            </button>
+            <button
+              mat-raised-button
+              (click)="loginUsingPassWord()"
+              color="primary"
+            >
+              Login
+            </button>
+          </span>
+        </mat-card-actions>
+        <div *ngIf="authError" color="warning">
+          <hr />
+          {{ authError }}
+        </div>
+      </mat-card>
+    </div>
+  </ng-template>
 </div>

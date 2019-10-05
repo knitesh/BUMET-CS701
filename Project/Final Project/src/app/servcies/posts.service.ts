@@ -31,9 +31,7 @@ export class FireBasePostService {
           const data = a.payload.doc.data();
           const key = a.payload.doc.id;
           console.log(data);
-          const date = data.creationTime
-            ? data.creationTime.toDate()
-            : Date.now();
+          const date = data.creationTime || Date.now();
           return { key, ...data, creationTime: date };
         })
       )
@@ -48,12 +46,14 @@ export class FireBasePostService {
         .toPromise()
         .then(doc => {
           let data = doc.data();
+          const date = data.creationTime || Date.now();
           observer.next({
             key: doc.id,
             title: data.title,
             description: data.description,
             author: data.author,
-            link: data.link
+            link: data.link,
+            creationTime: date
           });
         });
     });
