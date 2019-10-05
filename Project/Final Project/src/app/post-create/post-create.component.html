@@ -1,0 +1,85 @@
+<div class="button-row">
+  <a mat-fab color="primary" [routerLink]="['/posts']"
+    ><mat-icon>list</mat-icon></a
+  >
+</div>
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="postsForm" (ngSubmit)="onFormSubmit(postsForm.value)">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          placeholder="Title"
+          formControlName="title"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error>
+          <span
+            *ngIf="
+              !postsForm.get('title').valid && postsForm.get('title').touched
+            "
+            >Please enter post Title</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          placeholder="Post Link"
+          formControlName="link"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error>
+          <span
+            *ngIf="
+              !postsForm.get('link').valid && postsForm.get('link').touched
+            "
+            >Please enter post link</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <textarea
+          matInput
+          placeholder="Description"
+          formControlName="description"
+          [errorStateMatcher]="matcher"
+        ></textarea>
+        <mat-error>
+          <span
+            *ngIf="
+              !postsForm.get('description').valid &&
+              postsForm.get('description').touched
+            "
+            >Please enter post Description</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          placeholder="Author"
+          formControlName="author"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error>
+          <span
+            *ngIf="
+              !postsForm.get('author').valid && postsForm.get('author').touched
+            "
+            >Please enter post Author</span
+          >
+        </mat-error>
+      </mat-form-field>
+      <div class="button-row">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!postsForm.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

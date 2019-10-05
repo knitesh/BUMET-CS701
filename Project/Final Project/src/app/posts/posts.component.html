@@ -1,0 +1,30 @@
+<div
+  class="card mb-1 mt-3"
+  *ngFor="let post of posts | async"
+  [routerLink]="[post.link]"
+>
+  <div class="card-header">
+    <h5 class="card-title">{{ post.title }}</h5>
+  </div>
+  <a class="card-body" href="{{ post.link }}" target="_x">
+    <p class="card-text">
+      Descrition : {{ post.description }} <br />
+      Creation{{ post.creationTime }} <br />
+      {{ post.downVote }} <br />
+
+      {{ post.upVote }}
+      <br />
+    </p>
+    <a class="btn btn-warning" [routerLink]="['/post-details/', post.key]"
+      >Detail</a
+    >
+    <!--  -->
+  </a>
+  <div class="card-footer text-muted">{{ post.author }} 2 days ago</div>
+</div>
+<!-- 
+<div class="button-row">
+  <a mat-fab color="primary" routerLink="/post-create" routerLinkActive="active"
+    ><mat-icon>add</mat-icon></a
+  >
+</div> -->
