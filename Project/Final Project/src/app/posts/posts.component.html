@@ -1,27 +1,30 @@
-<div
-  class="card mb-1 mt-3"
+<mat-card
   *ngFor="let post of posts | async"
   [routerLink]="[post.link]"
+  class="m-2"
 >
-  <div class="card-header">
-    <h5 class="card-title">{{ post.title }}</h5>
-  </div>
-  <a class="card-body" href="{{ post.link }}" target="_x">
-    <p class="card-text">
-      Descrition : {{ post.description }} <br />
-      Creation{{ post.creationTime }} <br />
-      {{ post.downVote }} <br />
-
-      {{ post.upVote }}
-      <br />
+  <mat-card-header color="primary">
+    <mat-card-title>{{ post.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="pl-4 pr-4">
+    <p>Descrition : {{ post.description }}</p>
+    <p>
+      {{ post.upVote }} {{ post.downVote }} {{ post.author }} posted on:
+      {{ post.creationTime | date }}
     </p>
-    <a class="btn btn-warning" [routerLink]="['/post-details/', post.key]"
-      >Detail</a
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button href="{{ post.link }}" target="_x" color="accent">View</a>
+    <button
+      mat-button
+      [routerLink]="['/post-details/', post.key]"
+      class="float-right"
+      color="primary"
     >
-    <!--  -->
-  </a>
-  <div class="card-footer text-muted">{{ post.author }} 2 days ago</div>
-</div>
+      Detail
+    </button>
+  </mat-card-actions>
+</mat-card>
 <!-- 
 <div class="button-row">
   <a mat-fab color="primary" routerLink="/post-create" routerLinkActive="active"

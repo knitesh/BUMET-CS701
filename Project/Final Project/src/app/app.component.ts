@@ -1,19 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import * as firebase from "firebase";
+import { Observable } from "rxjs";
 // import * as firestore from "firebase/firestore";
 import { AngularFirestore } from "@angular/fire/firestore";
-
-const settings = { timestampsInSnapshots: true };
-const config = {
-  apiKey: "AIzaSyA5oxl7cibZ_FomInDs8RlsuD8UmpVeNr8",
-  authDomain: "ng-collectorjs.firebaseapp.com",
-  databaseURL: "https://ng-collectorjs.firebaseio.com",
-  projectId: "ng-collectorjs",
-  storageBucket: "",
-  messagingSenderId: "888721129443",
-  appId: "1:888721129443:web:2dfa5538cf12d1ade32ad6",
-  measurementId: "G-XZ9E6RGQFT"
-};
+import { ThemeService } from "./core/services/theme.service";
 
 @Component({
   selector: "app-root",
@@ -21,10 +10,15 @@ const config = {
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  title = "angular6-firestore";
-  constructor(db: AngularFirestore) {}
+  title = "CollectorJS - MET 701";
+  isDarkTheme: Observable<boolean>;
+  constructor(private themeService: ThemeService) {}
   ngOnInit() {
+    this.isDarkTheme = this.themeService.isDarkTheme;
     // firebase.initializeApp(config);
     // firebase.firestore().settings(settings);
+  }
+  toggleDarkTheme(checked: boolean) {
+    this.themeService.setDarkTheme(checked);
   }
 }

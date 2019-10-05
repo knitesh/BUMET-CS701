@@ -20,7 +20,6 @@ export class PostsComponent {
   posts: Observable<any[]>;
   constructor(private readonly db: AngularFirestore, fs: FireBasePostService) {
     this.postCollection = db.collection("posts");
-
     this.posts = fs.getPosts();
   }
 }

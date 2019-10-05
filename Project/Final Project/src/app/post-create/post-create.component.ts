@@ -37,8 +37,9 @@ export class PostCreateComponent implements OnInit {
 
   onFormSubmit(form: NgForm) {
     // get form data
-    console.log(form.value);
-    this.fs.createPost(form).subscribe(
+    const creationTime = Date.now();
+    const updateData = { ...form, creationTime: creationTime };
+    this.fs.createPost(updateData).subscribe(
       res => {
         let id = res["key"];
         this.router.navigate(["/post-details", id]);

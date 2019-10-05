@@ -1,5 +1,10 @@
-<div style="min-height:100vh">
-  <mat-toolbar color="primary">
+<!-- <link rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(cssUrl)'> -->
+<div
+  style="min-height:100vh"
+  class="light-theme"
+  [ngClass]="{ 'dark-theme': isDarkTheme | async }"
+>
+  <mat-toolbar>
     <mat-toolbar-row>
       <button
         mat-icon-button
@@ -51,7 +56,18 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="container">
-      <router-outlet></router-outlet>
+      <div>
+        <mat-slide-toggle
+          [checked]="isDarkTheme | async"
+          (change)="toggleDarkTheme($event.checked)"
+          class="float-right m-2"
+          m
+          >Dark theme</mat-slide-toggle
+        >
+      </div>
+      <div class="mt-5">
+        <router-outlet></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

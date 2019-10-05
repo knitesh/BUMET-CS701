@@ -18,3 +18,12 @@ a {
   text-decoration: none;
   color: #000;
 }
+.card-header {
+  // color: #fff;
+  // background-color: #f8c291;
+  max-height: 30px;
+  padding: 0;
+}
+.dark-theme .card-header {
+  background-color: #000;
+}

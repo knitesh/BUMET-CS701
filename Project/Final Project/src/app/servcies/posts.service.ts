@@ -30,7 +30,11 @@ export class FireBasePostService {
         actions.map(a => {
           const data = a.payload.doc.data();
           const key = a.payload.doc.id;
-          return { key, ...data };
+          console.log(data);
+          const date = data.creationTime
+            ? data.creationTime.toDate()
+            : Date.now();
+          return { key, ...data, creationTime: date };
         })
       )
     );
