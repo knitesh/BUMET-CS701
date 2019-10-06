@@ -9,6 +9,7 @@ export class ThemeService {
   isDarkTheme = this._darkTheme.asObservable();
 
   setDarkTheme(isDarkTheme: boolean): void {
+    console.log("...setDarkTheme", isDarkTheme);
     this._darkTheme.next(isDarkTheme);
   }
 }

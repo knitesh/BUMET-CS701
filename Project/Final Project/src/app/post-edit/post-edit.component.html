@@ -48,20 +48,7 @@
       >
     </mat-error>
   </mat-form-field>
-  <mat-form-field class="example-full-width">
-    <input
-      matInput
-      placeholder="Author"
-      formControlName="author"
-      [errorStateMatcher]="matcher"
-    />
-    <mat-error>
-      <span
-        *ngIf="!postForm.get('author').valid && postForm.get('author').touched"
-        >Please enter Post Author</span
-      >
-    </mat-error>
-  </mat-form-field>
+
   <div class="button-row">
     <button type="submit" [disabled]="!postForm.valid" mat-fab color="primary">
       <mat-icon>save</mat-icon>

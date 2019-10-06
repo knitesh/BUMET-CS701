@@ -9,6 +9,7 @@ import {
   NgForm,
   Validators
 } from "@angular/forms";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-post-edit",
@@ -25,7 +26,8 @@ export class postEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fs: FireBasePostService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public afAuth: AngularFireAuth
   ) {}
 
   ngOnInit() {
@@ -33,7 +35,6 @@ export class postEditComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       title: [null, Validators.required],
       description: [null, Validators.required],
-      author: [null, Validators.required],
       link: [null, Validators.required]
     });
   }
@@ -43,13 +44,18 @@ export class postEditComponent implements OnInit {
       this.postForm.setValue({
         title: data.title,
         description: data.description,
-        author: data.author,
         link: data.link
       });
     });
   }
   onFormSubmit(form: NgForm) {
-    this.fs.updatePost(this.id, form).subscribe(
+    const user = this.afAuth.auth.currentUser;
+    const data = {
+      ...form,
+      auther_id: user.uid,
+      author: user.displayName || "anonymous"
+    };
+    this.fs.updatePost(this.id, data).subscribe(
       res => {
         this.router.navigate(["/posts"]);
       },

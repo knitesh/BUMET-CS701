@@ -26,7 +26,8 @@ import {
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatGridListModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -61,7 +62,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

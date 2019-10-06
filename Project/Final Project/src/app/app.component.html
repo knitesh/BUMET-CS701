@@ -5,7 +5,7 @@
   [ngClass]="{ 'dark-theme': isDarkTheme | async }"
 >
   <div *ngIf="afAuth.user | async as user; else showLogin">
-    <mat-toolbar>
+    <mat-toolbar color="primary">
       <mat-toolbar-row>
         <button
           mat-icon-button
@@ -59,10 +59,10 @@
       <mat-sidenav-content class="container">
         <div>
           <mat-slide-toggle
+            #slide
             [checked]="isDarkTheme | async"
             (change)="toggleDarkTheme($event.checked)"
             class="float-right m-2"
-            m
             >Dark theme</mat-slide-toggle
           >
         </div>
@@ -73,10 +73,13 @@
     </mat-sidenav-container>
   </div>
   <ng-template #showLogin>
-    <div class="container container-small">
+    <mat-toolbar color="primary">
+      <span>CollectorJS</span>
+    </mat-toolbar>
+    <div class="container container-small mt-5">
       <mat-card class="text-centered">
-        <mat-card-header class="row mt-5 mb-4">
-          CollectorJS
+        <mat-card-header class="row ">
+          Login
         </mat-card-header>
         <mat-card-content>
           <form class="m-4">
@@ -108,7 +111,7 @@
           ></mat-spinner>
         </mat-card-content>
         <mat-card-actions class="m-4 pl-3">
-          <button mat-raised-button color="primary" (click)="login()">
+          <button mat-raised-button color="primary" (click)="loginGoogle()">
             Login with Google
           </button>
           <button
