@@ -5,6 +5,7 @@ import { MapquestService } from "./mapquest.service";
 
 import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
 
+// Interface for direction object
 interface Direction {
   from: string;
   to: string;
@@ -14,6 +15,7 @@ interface Direction {
   templateUrl: "./app.component.html"
 })
 export class AppComponent {
+  //instance variables
   dataItems: any;
   totalDistance: string;
   totalTime: string;
@@ -22,18 +24,19 @@ export class AppComponent {
   // a subject to publish search terms
   private searchFromTerms: Subject<Direction>;
 
+  // Injecting mapquestService
   constructor(private mapquestService: MapquestService) {}
 
   // Push a search term into the observable stream.
   searchFromLocation(term: Direction): void {
     this.searchFromTerms.next(term);
   }
+  // handle changes for search to location
   searchToLocation(term: Direction): void {
     this.searchFromTerms.next(term);
   }
 
   ngOnInit() {
-    console.log("...ngOniti");
     this.searchFromTerms = new Subject<Direction>();
 
     this.searchFromTerms
@@ -48,8 +51,11 @@ export class AppComponent {
       )
       .subscribe((result: any) => {
         if (result.route) {
+          // get total distance string
           this.totalDistance = `Distance: ${result.route.distance || 0}m`;
+          // get totaltime string
           this.totalTime = `Time: ${result.route.formattedTime || 0}`;
+          // get route legs
           if (result.route.legs) {
             this.directions = result.route.legs[0].maneuvers;
           } else {
@@ -60,6 +66,7 @@ export class AppComponent {
         // this.dataItems = result.items;
       });
   }
+  // set default value durin initial load
   ngAfterViewInit() {
     this.searchFromLocation({ from: "Boston, MA", to: "Cambridge, MA" });
   }

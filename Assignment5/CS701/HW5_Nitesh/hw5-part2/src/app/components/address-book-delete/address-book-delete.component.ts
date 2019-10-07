@@ -9,6 +9,7 @@ import { AddressProviderService } from "../../model/address-provider.service";
   styleUrls: ["./address-book-delete.component.css"]
 })
 export class AddressBookDeleteComponent implements OnInit {
+  // instance variables
   friend: Contact;
   title: string;
   isEditing: boolean;
@@ -19,21 +20,12 @@ export class AddressBookDeleteComponent implements OnInit {
     private addressService: AddressProviderService
   ) {}
 
-  ngOnInit() {
-    let id = this.route.snapshot.params["id"];
-    if (id) {
-      this.title = "Edit Contact";
-      this.isEditing = true;
-      this.friend = this.addressService.getFriend(id);
-    } else {
-      this.title = "Add Contact";
-      this.isEditing = false;
-      // this.friend = this.addressService.addFriend();
-    }
-    console.log(this.friend);
-  }
+  ngOnInit() {}
+  // function to delete user
   deleteUser() {
+    // address ervice to delete user from mock data
     this.addressService.deleteAddress(this.route.snapshot.params["id"]);
+    // navigate to main page
     this.router.navigate(["/"]);
   }
 }

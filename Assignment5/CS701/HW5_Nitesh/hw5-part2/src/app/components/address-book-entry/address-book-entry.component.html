@@ -16,20 +16,20 @@
       <p class="card-text">Address: {{ friend.address }}</p>
       <p class="card-text">Phone: {{ friend.phone }}</p>
 
-      <a
-        class="card-link"
-        [routerLink]="['/details', friend.id - 1]"
-        *ngIf="!(friend.id == 1)"
+      <button
+        class="card-link btn btn-outline-dark btn-sm"
+        (click)="navigateToPrev()"
+        *ngIf="!(friend.id == firstElement)"
       >
         Prev
-      </a>
-      <a
-        class="card-link float-right"
-        [routerLink]="['/details', friend.id + 1]"
-        *ngIf="!(friend.id == totalContacts)"
+      </button>
+      <button
+        class="card-link float-right btn btn-outline-dark btn-sm"
+        (click)="navigateToNext()"
+        *ngIf="!(friend.id == lastElement)"
       >
         Next
-      </a>
+      </button>
     </div>
   </div>
 </div>
