@@ -1,0 +1,26 @@
+<div class="jumbotron mt-5">
+  <h1 class="display-4">Wait!!</h1>
+  <p class="lead">
+    This operation will delete your friend address from contanct list.
+  </p>
+  <hr class="my-4" />
+  <p>
+    Click on 'Cancel' to go back or click on 'Delete' to remove address
+  </p>
+  <p class="lead">
+    <a
+      class="btn btn-primary btn-lg float-right"
+      href="#"
+      role="button"
+      [routerLink]="['/address']"
+      >Cancel</a
+    >
+    <button
+      class="btn btn-outline-danger btn-lg"
+      role="button"
+      (click)="deleteUser()"
+    >
+      Delete
+    </button>
+  </p>
+</div>

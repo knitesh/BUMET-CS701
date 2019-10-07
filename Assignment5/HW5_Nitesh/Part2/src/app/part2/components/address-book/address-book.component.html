@@ -1,0 +1,12 @@
+<h3>Contacts</h3>
+<div class="row">
+  <div class="card col-4 m-2" *ngFor="let friend of friends">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">{{ friend.name }}</h6>
+      <p>{{ friend.phone }}</p>
+      <a [routerLink]="['details', friend.id]" class="card-link">See Detail</a>
+      <a [routerLink]="['edit', friend.id]" class="card-link">Edit</a>
+      <a [routerLink]="['delete', friend.id]" class="card-link">Delete</a>
+    </div>
+  </div>
+</div>

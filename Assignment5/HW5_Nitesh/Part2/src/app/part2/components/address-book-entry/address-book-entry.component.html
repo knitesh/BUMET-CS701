@@ -1,0 +1,35 @@
+<div class="row mt-5">
+  <div class="card col-6 mx-auto">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ friend.name }}
+        <button
+          [routerLink]="['/address/edit', friend.id]"
+          class="card-link float-right btn btn-outline-dark"
+        >
+          Edit
+        </button>
+      </h5>
+
+      <p class="card-text">Id: {{ friend.id }}</p>
+      <p class="card-text">Name: {{ friend.name }}</p>
+      <p class="card-text">Address: {{ friend.address }}</p>
+      <p class="card-text">Phone: {{ friend.phone }}</p>
+
+      <a
+        class="card-link"
+        [routerLink]="['/address/details', friend.id - 1]"
+        *ngIf="!(friend.id == 1)"
+      >
+        Prev
+      </a>
+      <a
+        class="card-link float-right"
+        [routerLink]="['details', friend.id + 1]"
+        *ngIf="!(friend.id == totalContacts)"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
