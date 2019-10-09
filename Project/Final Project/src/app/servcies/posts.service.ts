@@ -20,8 +20,10 @@ export interface Post {
 })
 export class FireBasePostService {
   ref: AngularFirestoreCollection;
+  private itemDoc: AngularFirestoreDocument;
+  item: Observable<any>;
 
-  constructor(db: AngularFirestore) {
+  constructor(private db: AngularFirestore) {
     this.ref = db.collection("Posts");
   }
   getPosts(): Observable<any> {
@@ -39,6 +41,7 @@ export class FireBasePostService {
   }
 
   getPost(id: string): Observable<any> {
+    console.log("..getting post detail", id);
     return new Observable(observer => {
       this.ref
         .doc(id)
@@ -52,8 +55,10 @@ export class FireBasePostService {
             title: data.title,
             description: data.description,
             author: data.author,
+            authorId: data.auther_id,
             link: data.link,
-            creationTime: date
+            creationTime: date,
+            comments: data.comments || []
           });
         });
     });
@@ -67,6 +72,12 @@ export class FireBasePostService {
         });
       });
     });
+  }
+
+  createComment(data, postId): Observable<any> {
+    this.itemDoc = this.db.doc<any>(`Posts/${postId}`);
+    this.itemDoc.update(data);
+    return this.itemDoc.valueChanges();
   }
 
   updatePost(id: string, data): Observable<any> {

@@ -43,7 +43,7 @@
           aria-label="Example icon-button with a heart icon"
           [routerLink]="['/post-details/', post.key]"
         >
-          <mat-icon>messages</mat-icon>({{ post.comment?.length || 0 }})
+          <mat-icon>messages</mat-icon>({{ post.comments?.length || 0 }})
         </button>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="3" [rowspan]="1"> </mat-grid-tile>
