@@ -27,8 +27,12 @@
             <mat-icon>link</mat-icon>
             Submit Link
           </a>
-          <button (click)="logout()" mat-button>
+          <a routerLink="/account" mat-button>
             <mat-icon>account_box</mat-icon>
+            My account
+          </a>
+          <button (click)="logout()" mat-button>
+            <mat-icon>lock</mat-icon>
             Logout
           </button>
         </div>
@@ -46,7 +50,7 @@
             <mat-icon>link</mat-icon>
             Submit Link
           </a>
-          <a href="#" mat-list-item>
+          <a routerLink="/account" mat-list-item>
             <mat-icon>account_box</mat-icon>
             My Account
           </a>

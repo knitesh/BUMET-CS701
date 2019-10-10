@@ -55,10 +55,12 @@ export class FireBasePostService {
             title: data.title,
             description: data.description,
             author: data.author,
-            authorId: data.auther_id,
+            authorId: data.authorId,
             link: data.link,
             creationTime: date,
-            comments: data.comments || []
+            comments: data.comments || [],
+            upVote: data.upVote || [],
+            downVote: data.downVote || []
           });
         });
     });
@@ -81,6 +83,7 @@ export class FireBasePostService {
   }
 
   updatePost(id: string, data): Observable<any> {
+    console.log("....postservice --<>updatePost", id, data);
     return new Observable(observer => {
       this.ref
         .doc(id)

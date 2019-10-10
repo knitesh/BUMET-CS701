@@ -21,9 +21,11 @@
           mat-icon-button
           color="primary"
           aria-label="Example icon-button with a heart icon"
-          (click)="upVote()"
+          (click)="upVote(post.key)"
         >
-          <mat-icon>thumb_up</mat-icon>({{ post.upVote || 0 }})
+          <mat-icon>thumb_up</mat-icon>({{
+            (post.upVote && post.upVote.length) || 0
+          }})
         </button>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -31,9 +33,11 @@
           mat-icon-button
           color="primary"
           aria-label="Example icon-button with a heart icon"
-          (click)="downVote()"
+          (click)="downVote(post.key)"
         >
-          <mat-icon>thumb_down</mat-icon>({{ post.downVote || 0 }})
+          <mat-icon>thumb_down</mat-icon>({{
+            (post.downVote && post.downVote.length) || 0
+          }})
         </button>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">

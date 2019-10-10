@@ -30,6 +30,7 @@ import {
   MatGridListModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     PostsComponent,
     PostDetailComponent,
     PostCreateComponent,
-    postEditComponent
+    postEditComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

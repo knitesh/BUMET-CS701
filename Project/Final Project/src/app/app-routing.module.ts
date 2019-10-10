@@ -4,12 +4,18 @@ import { PostsComponent } from "./posts/posts.component";
 import { PostDetailComponent } from "./post-detail/post-detail.component";
 import { PostCreateComponent } from "./post-create/post-create.component";
 import { postEditComponent } from "./post-edit/post-edit.component";
+import { AccountComponent } from "./account/account.component";
 
 const appRoutes: Routes = [
   {
     path: "posts",
     component: PostsComponent,
     data: { title: "Posts List" }
+  },
+  {
+    path: "account",
+    component: AccountComponent,
+    data: { title: "My Account" }
   },
   {
     path: "post-details/:id",
