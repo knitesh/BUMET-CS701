@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Observable } from "rxjs";
 // import * as firestore from "firebase/firestore";
 
-import { ThemeService } from "./core/services/theme.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { auth } from "firebase/app";
 import { MatSlideToggle } from "@angular/material";
+
+import { ThemeService } from "./core/services/theme.service";
+import { UserService } from "./core/services/user.service";
 
 @Component({
   selector: "app-root",
@@ -23,13 +25,15 @@ export class AppComponent implements OnInit {
   isDarkTheme: Observable<boolean>;
   constructor(
     private themeService: ThemeService,
+    private userService: UserService,
     public afAuth: AngularFireAuth
   ) {}
   ngOnInit() {
-    const darktheme = localStorage.getItem("cjs-darktheme");
     this.isDarkTheme = this.themeService.isDarkTheme;
-    const that = this;
 
+    // this.themeService.setDarkTheme(true);
+    const that = this;
+    const darktheme = localStorage.getItem("cjs-darktheme");
     // else that.darkThemeSlider.checked = false;
     setTimeout(() => {
       darktheme === "1"
@@ -37,29 +41,22 @@ export class AppComponent implements OnInit {
         : that.toggleDarkTheme(false);
     });
   }
-  ngAfterViewInit() {
-    // this.matSlideToggle.toggle();
-  }
 
   toggleDarkTheme(checked: boolean) {
     this.themeService.setDarkTheme(checked);
     localStorage.setItem("cjs-darktheme", checked ? "1" : "0");
   }
   loginGoogle() {
-    this.afAuth.auth
-      .signInWithPopup(new auth.GoogleAuthProvider())
-      .catch(err => {
-        console.log(err);
-        this.authError = err.message;
-      });
+    this.userService.loginGoogle().catch(err => {
+      console.log(err);
+      this.authError = err.message;
+    });
   }
   loginGithub() {
-    this.afAuth.auth
-      .signInWithPopup(new auth.GithubAuthProvider())
-      .catch(err => {
-        console.log(err);
-        this.authError = err.message;
-      });
+    this.userService.loginGithub().catch(err => {
+      console.log(err);
+      this.authError = err.message;
+    });
   }
   loginUsingPassWord() {
     if (!this.email) {
@@ -70,22 +67,20 @@ export class AppComponent implements OnInit {
       alert(`Password can'tbe empty`);
       return;
     }
-    this.afAuth.auth
-      .signInWithEmailAndPassword(this.email, this.password)
+    this.userService
+      .loginUsingPassWord(this.email, this.password)
       .catch(err => {
         // console.log("...err", err);
         alert(err.message);
       });
   }
   logout() {
-    this.afAuth.auth.signOut();
+    this.userService.logout();
   }
   doRegister() {
-    this.afAuth.auth
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .catch(err => {
-        console.log(err);
-        alert(err.message);
-      });
+    this.userService.doRegister(this.email, this.password).catch(err => {
+      console.log(err);
+      alert(err.message);
+    });
   }
 }
