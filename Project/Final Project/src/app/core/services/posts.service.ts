@@ -6,7 +6,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
-import { IPost } from "../interfaces/post";
+import { IPost } from "../../interfaces/post";
 
 export interface Post {
   id: string;

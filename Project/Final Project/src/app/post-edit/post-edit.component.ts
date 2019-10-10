@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { FireBasePostService } from "../servcies/posts.service";
+import { FireBasePostService } from "../core/services/posts.service";
 import {
   FormControl,
   FormGroupDirective,

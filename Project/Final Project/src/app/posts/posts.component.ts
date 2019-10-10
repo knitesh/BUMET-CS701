@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { FireBasePostService } from "../servcies/posts.service";
+import { FireBasePostService } from "../core/services/posts.service";
 
 import {
   AngularFirestore,

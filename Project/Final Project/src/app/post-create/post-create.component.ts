@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FireBasePostService } from "../servcies/posts.service";
+import { FireBasePostService } from "../core/services/posts.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import {
   FormControl,
