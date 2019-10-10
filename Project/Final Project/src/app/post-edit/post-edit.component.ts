@@ -18,6 +18,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 })
 export class postEditComponent implements OnInit {
   postForm: FormGroup;
+  post: any;
   id: string = "";
   title: string = "";
   description: string = "";
@@ -41,6 +42,7 @@ export class postEditComponent implements OnInit {
   getPost(id) {
     this.fs.getPost(id).subscribe(data => {
       this.id = data.key;
+      this.post = data;
       this.postForm.setValue({
         title: data.title,
         description: data.description,
@@ -51,6 +53,7 @@ export class postEditComponent implements OnInit {
   onFormSubmit(form: NgForm) {
     const user = this.afAuth.auth.currentUser;
     const data = {
+      ...this.post,
       ...form,
       auther_id: user.uid,
       author: user.displayName || "anonymous"
