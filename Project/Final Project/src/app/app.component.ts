@@ -14,7 +14,6 @@ import { UserService } from "./core/services/user.service";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent implements OnInit {
-  @ViewChild("slide", { static: false })
   matSlideToggle: MatSlideToggle;
   darkThemeSlider: MatSlideToggle;
   title = "CollectorJS - MET 701";

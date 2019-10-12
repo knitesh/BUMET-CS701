@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { PostsComponent } from "./posts/posts.component";
-import { PostDetailComponent } from "./post-detail/post-detail.component";
-import { PostCreateComponent } from "./post-create/post-create.component";
-import { postEditComponent } from "./post-edit/post-edit.component";
-import { AccountComponent } from "./account/account.component";
-import { AccountLoginComponent } from "./account-login/account-login.component";
+import { PostsComponent } from "../posts/posts.component";
+import { PostDetailComponent } from "../post-detail/post-detail.component";
+import { PostCreateComponent } from "../post-create/post-create.component";
+import { postEditComponent } from "../post-edit/post-edit.component";
+import { AccountComponent } from "../account/account.component";
+import { AccountLoginComponent } from "../account-login/account-login.component";
 
-import { AuthGuardService as AuthGuard } from "./core/services/auth.guard.service";
+import { AuthGuardService as AuthGuard } from "../core/services/auth.guard.service";
 
 const appRoutes: Routes = [
   {

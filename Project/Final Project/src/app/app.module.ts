@@ -6,7 +6,7 @@ import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from "../environments/environment";
 
-import { AppRoutingModule } from "./app-routing.module";
+import { AppRoutingModule } from "./routing/app-routing.module";
 import { AppComponent } from "./app.component";
 import { PostsComponent } from "./posts/posts.component";
 import { PostDetailComponent } from "./post-detail/post-detail.component";
@@ -30,8 +30,8 @@ import {
   MatGridListModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AccountComponent } from './account/account.component';
-import { AccountLoginComponent } from './account-login/account-login.component';
+import { AccountComponent } from "./account/account.component";
+import { AccountLoginComponent } from "./account-login/account-login.component";
 
 @NgModule({
   declarations: [
