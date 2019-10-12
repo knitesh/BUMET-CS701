@@ -12,6 +12,9 @@ export class UserService {
     return this.afAuth.auth.currentUser;
   }
 
+  isAuthenticated() {
+    return this.afAuth.auth.currentUser;
+  }
   loginGoogle() {
     return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }

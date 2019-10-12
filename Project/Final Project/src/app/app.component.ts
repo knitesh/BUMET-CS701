@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Observable } from "rxjs";
-// import * as firestore from "firebase/firestore";
 
 import { AngularFireAuth } from "@angular/fire/auth";
-import { auth } from "firebase/app";
+import { Router } from "@angular/router";
 import { MatSlideToggle } from "@angular/material";
 
 import { ThemeService } from "./core/services/theme.service";
@@ -19,17 +18,21 @@ export class AppComponent implements OnInit {
   matSlideToggle: MatSlideToggle;
   darkThemeSlider: MatSlideToggle;
   title = "CollectorJS - MET 701";
-  password: string;
-  email: string;
-  authError: string;
+
   isDarkTheme: Observable<boolean>;
   constructor(
     private themeService: ThemeService,
     private userService: UserService,
-    public afAuth: AngularFireAuth
-  ) {}
+    public afAuth: AngularFireAuth,
+    private router: Router
+  ) {
+    if (this.userService.getCurrentUser() === null) {
+      this.router.navigate(["/login"]);
+    }
+  }
   ngOnInit() {
     this.isDarkTheme = this.themeService.isDarkTheme;
+    console.log(this.userService.getCurrentUser());
 
     // this.themeService.setDarkTheme(true);
     const that = this;
@@ -46,41 +49,9 @@ export class AppComponent implements OnInit {
     this.themeService.setDarkTheme(checked);
     localStorage.setItem("cjs-darktheme", checked ? "1" : "0");
   }
-  loginGoogle() {
-    this.userService.loginGoogle().catch(err => {
-      console.log(err);
-      this.authError = err.message;
-    });
-  }
-  loginGithub() {
-    this.userService.loginGithub().catch(err => {
-      console.log(err);
-      this.authError = err.message;
-    });
-  }
-  loginUsingPassWord() {
-    if (!this.email) {
-      alert(`Email can't be empty`);
-      return;
-    }
-    if (!this.password) {
-      alert(`Password can'tbe empty`);
-      return;
-    }
-    this.userService
-      .loginUsingPassWord(this.email, this.password)
-      .catch(err => {
-        // console.log("...err", err);
-        alert(err.message);
-      });
-  }
+  l;
   logout() {
     this.userService.logout();
-  }
-  doRegister() {
-    this.userService.doRegister(this.email, this.password).catch(err => {
-      console.log(err);
-      alert(err.message);
-    });
+    this.router.navigate(["/login"]);
   }
 }

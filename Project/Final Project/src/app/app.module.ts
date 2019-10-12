@@ -31,6 +31,7 @@ import {
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AccountComponent } from './account/account.component';
+import { AccountLoginComponent } from './account-login/account-login.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AccountComponent } from './account/account.component';
     PostDetailComponent,
     PostCreateComponent,
     postEditComponent,
-    AccountComponent
+    AccountComponent,
+    AccountLoginComponent
   ],
   imports: [
     BrowserModule,
