@@ -80,70 +80,70 @@
     <mat-toolbar color="primary">
       <span>CollectorJS</span>
     </mat-toolbar>
-    <div class="container container-small mt-5">
-      <mat-card class="text-centered">
-        <mat-card-header class="row ">
-          Login
-        </mat-card-header>
-        <mat-card-content>
-          <form class="m-4">
-            <mat-form-field class="col-12">
-              <input
-                matInput
-                placeholder="Email"
-                [(ngModel)]="email"
-                name="email"
-                required
-                autocomplete="false"
-              />
-            </mat-form-field>
+    <!-- <div class="container container-small mt-5"> -->
+    <mat-card class="text-centered login-card">
+      <mat-card-header class="row ">
+        Login
+      </mat-card-header>
+      <mat-card-content>
+        <form class="m-4">
+          <mat-form-field class="col-12">
+            <input
+              matInput
+              placeholder="Email"
+              [(ngModel)]="email"
+              name="email"
+              required
+              autocomplete="false"
+            />
+          </mat-form-field>
 
-            <mat-form-field class="col-12">
-              <input
-                matInput
-                placeholder="Password"
-                [(ngModel)]="password"
-                type="password"
-                name="password"
-                required
-                autocomplete="false"
-              />
-            </mat-form-field>
-          </form>
-          <mat-spinner
-            [style.display]="showSpinner ? 'block' : 'none'"
-          ></mat-spinner>
-        </mat-card-content>
-        <mat-card-actions class="m-4 pl-3">
-          <button mat-raised-button color="primary" (click)="loginGoogle()">
-            Login with Google
+          <mat-form-field class="col-12">
+            <input
+              matInput
+              placeholder="Password"
+              [(ngModel)]="password"
+              type="password"
+              name="password"
+              required
+              autocomplete="false"
+            />
+          </mat-form-field>
+        </form>
+        <mat-spinner
+          [style.display]="showSpinner ? 'block' : 'none'"
+        ></mat-spinner>
+      </mat-card-content>
+      <mat-card-actions class="m-4 pl-3">
+        <button mat-raised-button color="primary" (click)="loginGoogle()">
+          Login with Google
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="loginGithub()"
+          class="ml-5"
+        >
+          Login with Github
+        </button>
+        <span class="float-right">
+          <button mat-button (click)="doRegister()" color="secondary">
+            Register
           </button>
           <button
             mat-raised-button
-            color="accent"
-            (click)="loginGithub()"
-            class="ml-5"
+            (click)="loginUsingPassWord()"
+            color="primary"
           >
-            Login with Github
+            Login
           </button>
-          <span class="float-right">
-            <button mat-button (click)="doRegister()" color="secondary">
-              Register
-            </button>
-            <button
-              mat-raised-button
-              (click)="loginUsingPassWord()"
-              color="primary"
-            >
-              Login
-            </button>
-          </span>
-        </mat-card-actions>
-        <div *ngIf="authError" color="warning">
-          <hr />
-          {{ authError }}
-        </div>
-      </mat-card>
-    </div>
+        </span>
+      </mat-card-actions>
+      <div *ngIf="authError" color="warning">
+        <hr />
+        {{ authError }}
+      </div>
+    </mat-card>
+    <!-- </div> -->
   </ng-template>
 </div>
